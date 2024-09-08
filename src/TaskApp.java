@@ -1,8 +1,9 @@
 public class TaskApp {
     public static void main(String[] args){
         TaskManager taskManager = new TaskManager();
+        JsonManager jsonManager = new JsonManager();
         String choice = args[0];
-        taskManager.listOfTasksUpdate();
+        taskManager.updateListOfTasks();
         switch (choice){
             case "add":
                 taskManager.add(args[1]);
@@ -32,6 +33,6 @@ public class TaskApp {
                 taskManager.updateTask(Integer.valueOf(args[1]), args[2]);
                 break;
         }
-        taskManager.jsonUpdate();
+        jsonManager.updateJsonFile(taskManager.getTasks());
     }
 }

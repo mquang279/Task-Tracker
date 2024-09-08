@@ -1,4 +1,5 @@
 import java.io.*;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -7,43 +8,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class TaskManager {
-    private ArrayList<Task> tasks = new ArrayList<>();
-    private final Path path = Path.of("tasks.json");
+    private ArrayList<Task> tasks;
 
     public TaskManager(){
-        if(!Files.exists(path)) {
-            try {
-                Files.createFile(path);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        this.tasks = new ArrayList<>();
     }
 
-    public void jsonUpdate(){
-        try {
-            Files.newBufferedWriter(path, StandardOpenOption.TRUNCATE_EXISTING).close();
-        } catch (IOException ioe) {
-            throw new RuntimeException(ioe);
-        }
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("[\n");
-        for (int i = 0; i < tasks.size(); i++){
-            if (i != tasks.size() - 1){
-                stringBuilder.append(tasks.get(i).toJson() + ",\n");
-            }
-            else{
-                stringBuilder.append(tasks.get(i).toJson() + "\n]");
-            }
-        }
-        try {
-            Files.writeString(path, stringBuilder.toString(), StandardOpenOption.APPEND);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void listOfTasksUpdate(){
+    public void updateListOfTasks(){
         //Read from json file
         BufferedReader reader = null;
         try {
@@ -62,12 +33,12 @@ public class TaskManager {
             if (line.length() != 1){
                 if (line.endsWith(",")) line = line.substring(0, line.length() - 1);
                 line = line.substring(0, line.length() - 1);
-                tasks.add(jsonToTask(line));
+                tasks.add(convertJsonToTask(line));
             }
         }
     }
 
-    public Task jsonToTask(String json){
+    public Task convertJsonToTask(String json){
         String[] properties = json.split(",");
         //id : 0, description : 1, status : 2, createdAt : 3, updatedAt : 4
         int currentProperty = 0;
@@ -183,5 +154,9 @@ public class TaskManager {
             }
         }
         System.out.println("Cannot find task with ID: " + id + ".");
+    }
+
+    public ArrayList<Task> getTasks(){
+        return this.tasks;
     }
 }

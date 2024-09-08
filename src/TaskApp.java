@@ -1,10 +1,8 @@
-import java.io.IOException;
-
 public class TaskApp {
     public static void main(String[] args){
         TaskManager taskManager = new TaskManager();
         String choice = args[0];
-        taskManager.tasksUpdate();
+        taskManager.listOfTasksUpdate();
         switch (choice){
             case "add":
                 taskManager.add(args[1]);
@@ -29,6 +27,9 @@ public class TaskApp {
                 break;
             case "delete":
                 taskManager.deleteTask(Integer.valueOf(args[1]));
+                break;
+            case "update":
+                taskManager.updateTask(Integer.valueOf(args[1]), args[2]);
                 break;
         }
         taskManager.jsonUpdate();

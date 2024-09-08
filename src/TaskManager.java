@@ -43,7 +43,7 @@ public class TaskManager {
         }
     }
 
-    public void tasksUpdate(){
+    public void listOfTasksUpdate(){
         //Read from json file
         BufferedReader reader = null;
         try {
@@ -104,23 +104,20 @@ public class TaskManager {
     public void add(String description){
         Task task = new Task(description);
         tasks.add(task);
+        System.out.println("Task added successfully (ID: " + task.getId() + ")");
     }
 
-    public void update(int id, String description){
+    public void updateTask(int id, String description){
         for (Task task : tasks){
             if (task.getId() == id){
                 task.setDescription(description);
+                task.setUpdatedAt(LocalDateTime.now());
+                System.out.println("Task updated successfully (ID: " + id + ")");
+                System.out.println(task.toString());
+                return;
             }
         }
-    }
-
-    public void delete(int id){
-        for (int i = 0; i < tasks.size(); i++){
-            if (tasks.get(i).getId() == id){
-                tasks.remove(i);
-                break;
-            }
-        }
+        System.out.println("Cannot find task with ID: " + id + ".");
     }
 
     public void listTasks(){
@@ -158,8 +155,11 @@ public class TaskManager {
             if (task.getId() == id){
                 task.setStatus(Status.IN_PROGRESS);
                 task.setUpdatedAt(LocalDateTime.now());
+                System.out.println("Change task status to IN_PROGRESS successfully! (ID: " + id + ")");
+                return;
             }
         }
+        System.out.println("Cannot find task with ID: " + id + ".");
     }
 
     public void markDone(int id){
@@ -167,16 +167,21 @@ public class TaskManager {
             if (task.getId() == id){
                 task.setStatus(Status.DONE);
                 task.setUpdatedAt(LocalDateTime.now());
+                System.out.println("Change task status to DONE successfully! (ID: " + id + ")");
+                return;
             }
         }
+        System.out.println("Cannot find task with ID: " + id + ".");
     }
 
     public void deleteTask(int id){
         for (Task task : tasks){
             if (task.getId() == id){
                 tasks.remove(task);
-                break;
+                System.out.println("Task deleted successfully (ID: " + id + ")");
+                return;
             }
         }
+        System.out.println("Cannot find task with ID: " + id + ".");
     }
 }

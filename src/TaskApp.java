@@ -27,6 +27,9 @@ public class TaskApp {
             case "mark-done":
                 taskManager.markInProgress(Integer.valueOf(args[1]));
                 break;
+            case "delete":
+                taskManager.deleteTask(Integer.valueOf(args[1]));
+                break;
         }
         taskManager.jsonUpdate();
     }

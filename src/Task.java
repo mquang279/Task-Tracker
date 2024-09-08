@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 
 public class Task {
+    private static int maxID = 0;
     private int id = 0;
     private String description;
     private Status status;
@@ -12,8 +13,9 @@ public class Task {
     private LocalDateTime updatedAt;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH-mm-ss");
 
-    public Task(String description, int id){
-        this.id = id;
+    public Task(String description){
+        maxID++;
+        this.id = maxID;
         this.description = description;
         status = Status.TODO;
         createdAt = LocalDateTime.now();
@@ -21,6 +23,7 @@ public class Task {
     }
 
     public Task(int id, String description, Status status, LocalDateTime createdAt, LocalDateTime updatedAt){
+        maxID = Math.max(maxID, id);
         this.id = id;
         this.description = description;
         this.status = status;

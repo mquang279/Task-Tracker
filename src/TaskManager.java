@@ -102,7 +102,7 @@ public class TaskManager {
     }
 
     public void add(String description){
-        Task task = new Task(description, (int)(tasks.size() + 1));
+        Task task = new Task(description);
         tasks.add(task);
     }
 
@@ -167,6 +167,15 @@ public class TaskManager {
             if (task.getId() == id){
                 task.setStatus(Status.DONE);
                 task.setUpdatedAt(LocalDateTime.now());
+            }
+        }
+    }
+
+    public void deleteTask(int id){
+        for (Task task : tasks){
+            if (task.getId() == id){
+                tasks.remove(task);
+                break;
             }
         }
     }

@@ -25,7 +25,7 @@ public class TaskApp {
                 taskManager.markInProgress(Integer.valueOf(args[1]));
                 break;
             case "mark-done":
-                taskManager.markInProgress(Integer.valueOf(args[1]));
+                taskManager.markDone(Integer.valueOf(args[1]));
                 break;
             case "delete":
                 taskManager.deleteTask(Integer.valueOf(args[1]));

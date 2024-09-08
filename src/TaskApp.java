@@ -12,6 +12,21 @@ public class TaskApp {
             case "list":
                 taskManager.listTasks();
                 break;
+            case "list-done":
+                taskManager.listDoneTask();
+                break;
+            case "list-in-progress":
+                taskManager.listInProgressTask();
+                break;
+            case "list-todo":
+                taskManager.listToDoTask();
+                break;
+            case "mark-in-progress":
+                taskManager.markInProgress(Integer.valueOf(args[1]));
+                break;
+            case "mark-done":
+                taskManager.markInProgress(Integer.valueOf(args[1]));
+                break;
         }
         taskManager.jsonUpdate();
     }

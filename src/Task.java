@@ -83,17 +83,17 @@ public class Task {
         return "Task{" +
                 "description='" + description + '\'' +
                 ", status=" + status +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
+                ", createdAt=" + createdAt.format(formatter) +
+                ", updatedAt=" + updatedAt.format(formatter) +
                 ", currentID=" + currentID +
                 '}';
     }
 
     public String toJson(){
-        return "{\"id\":\"" + this.getCurrentID() + "\", " +
-                "\"description\":\"" + this.getDescription() + "\", " +
-                "\"status\":\"" + this.getStatus() + "\", " +
-                "\"createdAt\":\"" + this.getCreatedAt().format(formatter) + "\", " +
-                "\"updatedAt\":\"" + this.getUpdatedAt().format(formatter) + "\"}";
+        return "{\"id\":\"" + this.currentID + "\", " +
+                "\"description\":\"" + this.description + "\", " +
+                "\"status\":\"" + this.status + "\", " +
+                "\"createdAt\":\"" + this.createdAt.format(formatter) + "\", " +
+                "\"updatedAt\":\"" + this.createdAt.format(formatter) + "\"}";
     }
 }

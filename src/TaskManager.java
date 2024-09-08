@@ -138,7 +138,7 @@ public class TaskManager {
         }
     }
 
-    private void listToDoTask(){
+    public void listToDoTask(){
         for (Task task : tasks){
             if (task.getStatus() == Status.TODO){
                 System.out.println(task);
@@ -146,7 +146,7 @@ public class TaskManager {
         }
     }
 
-    private void listInProgressTask(){
+    public void listInProgressTask(){
         for (Task task : tasks){
             if (task.getStatus() == Status.DONE){
                 System.out.println(task);
@@ -154,4 +154,19 @@ public class TaskManager {
         }
     }
 
+    public void markInProgress(int id){
+        for (Task task : tasks){
+            if (task.getCurrentID() == id){
+                task.setStatus(Status.IN_PROGRESS);
+            }
+        }
+    }
+
+    public void markDone(int id){
+        for (Task task : tasks){
+            if (task.getCurrentID() == id){
+                task.setStatus(Status.DONE);
+            }
+        }
+    }
 }

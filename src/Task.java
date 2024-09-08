@@ -5,37 +5,35 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 
 public class Task {
-    private static int id = 0;
+    private int id = 0;
     private String description;
     private Status status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private int currentID;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH-mm-ss");
 
-    public Task(String description){
-        id++;
-        currentID = id;
+    public Task(String description, int id){
+        this.id = id;
         this.description = description;
         status = Status.TODO;
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
     }
 
-    public Task(int currentID, String description, Status status, LocalDateTime createdAt, LocalDateTime updatedAt){
-        this.currentID = currentID;
+    public Task(int id, String description, Status status, LocalDateTime createdAt, LocalDateTime updatedAt){
+        this.id = id;
         this.description = description;
         this.status = status;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 
-    public static void setId(int id) {
-        Task.id = id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -70,14 +68,6 @@ public class Task {
         this.updatedAt = updatedAt;
     }
 
-    public int getCurrentID() {
-        return currentID;
-    }
-
-    public void setCurrentID(int currentID) {
-        this.currentID = currentID;
-    }
-
     @Override
     public String toString() {
         return "Task{" +
@@ -85,12 +75,12 @@ public class Task {
                 ", status=" + status +
                 ", createdAt=" + createdAt.format(formatter) +
                 ", updatedAt=" + updatedAt.format(formatter) +
-                ", currentID=" + currentID +
+                ", id=" + id +
                 '}';
     }
 
     public String toJson(){
-        return "{\"id\":\"" + this.currentID + "\", " +
+        return "{\"id\":\"" + this.id + "\", " +
                 "\"description\":\"" + this.description + "\", " +
                 "\"status\":\"" + this.status + "\", " +
                 "\"createdAt\":\"" + this.createdAt.format(formatter) + "\", " +

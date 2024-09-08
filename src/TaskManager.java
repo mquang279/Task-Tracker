@@ -1,5 +1,4 @@
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -16,7 +15,7 @@ public class TaskManager {
             try {
                 Files.createFile(path);
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
     }
@@ -25,7 +24,7 @@ public class TaskManager {
         try {
             Files.newBufferedWriter(path, StandardOpenOption.TRUNCATE_EXISTING).close();
         } catch (IOException ioe) {
-            ioe.printStackTrace();
+            throw new RuntimeException(ioe);
         }
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("[\n");
@@ -103,13 +102,13 @@ public class TaskManager {
     }
 
     public void add(String description){
-        Task task = new Task(description);
+        Task task = new Task(description, (int)(tasks.size() + 1));
         tasks.add(task);
     }
 
     public void update(int id, String description){
         for (Task task : tasks){
-            if (task.getCurrentID() == id){
+            if (task.getId() == id){
                 task.setDescription(description);
             }
         }
@@ -117,7 +116,7 @@ public class TaskManager {
 
     public void delete(int id){
         for (int i = 0; i < tasks.size(); i++){
-            if (tasks.get(i).getCurrentID() == id){
+            if (tasks.get(i).getId() == id){
                 tasks.remove(i);
                 break;
             }
@@ -148,7 +147,7 @@ public class TaskManager {
 
     public void listInProgressTask(){
         for (Task task : tasks){
-            if (task.getStatus() == Status.DONE){
+            if (task.getStatus() == Status.IN_PROGRESS){
                 System.out.println(task);
             }
         }
@@ -156,16 +155,18 @@ public class TaskManager {
 
     public void markInProgress(int id){
         for (Task task : tasks){
-            if (task.getCurrentID() == id){
+            if (task.getId() == id){
                 task.setStatus(Status.IN_PROGRESS);
+                task.setUpdatedAt(LocalDateTime.now());
             }
         }
     }
 
     public void markDone(int id){
         for (Task task : tasks){
-            if (task.getCurrentID() == id){
+            if (task.getId() == id){
                 task.setStatus(Status.DONE);
+                task.setUpdatedAt(LocalDateTime.now());
             }
         }
     }

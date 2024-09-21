@@ -42,4 +42,38 @@ public class JsonManager {
             throw new RuntimeException(e);
         }
     }
+
+    public static Task convertJsonToTask(String json){
+        String[] properties = json.split(",");
+        //id : 0, description : 1, status : 2, createdAt : 3, updatedAt : 4
+        int currentProperty = 0;
+        int id = 0;
+        String description = "";
+        Status status = null;
+        LocalDateTime createdAt = null, updatedAt = null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH-mm-ss");
+        for (String property : properties){
+            property = property.split(":")[1];
+            property = property.substring(1, property.length() - 1);
+            switch (currentProperty){
+                case 0:
+                    id = Integer.valueOf(property);
+                    break;
+                case 1:
+                    description = property;
+                    break;
+                case 2:
+                    status = Status.valueOf(property);
+                    break;
+                case 3:
+                    createdAt = LocalDateTime.parse(property, formatter);
+                    break;
+                case 4:
+                    updatedAt = LocalDateTime.parse(property, formatter);
+                    break;
+            }
+            currentProperty++;
+        }
+        return new Task(id, description, status, createdAt, updatedAt);
+    }
 }

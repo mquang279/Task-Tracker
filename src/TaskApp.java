@@ -9,7 +9,7 @@ public class TaskApp {
                 taskManager.add(args[1]);
                 break;
             case "list":
-                taskManager.listTasks();
+                taskManager.listAllTasks();
                 break;
             case "list-done":
                 taskManager.listDoneTask();
@@ -30,9 +30,9 @@ public class TaskApp {
                 taskManager.deleteTask(Integer.valueOf(args[1]));
                 break;
             case "update":
-                taskManager.updateTask(Integer.valueOf(args[1]), args[2]);
+                taskManager.updateTaskDescription(Integer.valueOf(args[1]), args[2]);
                 break;
         }
-        jsonManager.updateJsonFile(taskManager.getTasks());
+        jsonManager.updateJsonFile(taskManager.getListOfTasks());
     }
 }

@@ -1,6 +1,5 @@
 import java.io.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -41,14 +40,14 @@ public class TaskManager {
         System.out.println("Task added successfully (ID: " + task.getId() + ")");
     }
 
-    public void updateTask(int id, String description){
+    public void updateTaskDescription(int id, String description){
         Task task = findTask(id).orElseThrow(() -> new IllegalArgumentException("Task with " + id + "not found"));
         task.setDescription(description);
         task.setUpdatedAt(LocalDateTime.now());
         System.out.println("Cannot find task with ID: " + id + ".");
     }
 
-    public void listTasks(){
+    public void listAllTasks(){
         for (Task task : tasks){
             System.out.println(task);
         }
@@ -97,7 +96,7 @@ public class TaskManager {
         return tasks.stream().filter((task) -> task.getId() == id).findFirst();
     }
 
-    public ArrayList<Task> getTasks(){
+    public ArrayList<Task> getListOfTasks(){
         return this.tasks;
     }
 }

@@ -1,11 +1,8 @@
 import java.io.*;
-import java.lang.reflect.Array;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class TaskManager {
     private ArrayList<Task> tasks;
@@ -79,15 +76,9 @@ public class TaskManager {
     }
 
     public void updateTask(int id, String description){
-        for (Task task : tasks){
-            if (task.getId() == id){
-                task.setDescription(description);
-                task.setUpdatedAt(LocalDateTime.now());
-                System.out.println("Task updated successfully (ID: " + id + ")");
-                System.out.println(task.toString());
-                return;
-            }
-        }
+        Task task = findTask(id).orElseThrow(() -> new IllegalArgumentException("Task with " + id + "not found"));
+        task.setDescription(description);
+        task.setUpdatedAt(LocalDateTime.now());
         System.out.println("Cannot find task with ID: " + id + ".");
     }
 
@@ -122,38 +113,22 @@ public class TaskManager {
     }
 
     public void markInProgress(int id){
-        for (Task task : tasks){
-            if (task.getId() == id){
-                task.setStatus(Status.IN_PROGRESS);
-                task.setUpdatedAt(LocalDateTime.now());
-                System.out.println("Change task status to IN_PROGRESS successfully! (ID: " + id + ")");
-                return;
-            }
-        }
-        System.out.println("Cannot find task with ID: " + id + ".");
+        Task task = findTask(id).orElseThrow(() -> new IllegalArgumentException("Task with " + id + "not found"));
+        task.setStatus(Status.IN_PROGRESS);
     }
 
     public void markDone(int id){
-        for (Task task : tasks){
-            if (task.getId() == id){
-                task.setStatus(Status.DONE);
-                task.setUpdatedAt(LocalDateTime.now());
-                System.out.println("Change task status to DONE successfully! (ID: " + id + ")");
-                return;
-            }
-        }
-        System.out.println("Cannot find task with ID: " + id + ".");
+        Task task = findTask(id).orElseThrow(() -> new IllegalArgumentException("Task with " + id + " not found"));
+        task.setStatus(Status.DONE);
     }
 
     public void deleteTask(int id){
-        for (Task task : tasks){
-            if (task.getId() == id){
-                tasks.remove(task);
-                System.out.println("Task deleted successfully (ID: " + id + ")");
-                return;
-            }
-        }
-        System.out.println("Cannot find task with ID: " + id + ".");
+        Task task = findTask(id).orElseThrow(() -> new IllegalArgumentException("Task with " + id + " not found"));
+        tasks.remove(task);
+    }
+
+    public Optional<Task> findTask(int id) {
+        return tasks.stream().filter((task) -> task.getId() == id).findFirst();
     }
 
     public ArrayList<Task> getTasks(){

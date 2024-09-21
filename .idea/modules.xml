@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../expense-tracker-cli/expense-tracker-cli.iml" filepath="$PROJECT_DIR$/../expense-tracker-cli/expense-tracker-cli.iml" />
       <module fileurl="file://$PROJECT_DIR$/task-tracker-cli.iml" filepath="$PROJECT_DIR$/task-tracker-cli.iml" />
     </modules>
   </component>

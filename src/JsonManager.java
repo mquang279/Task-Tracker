@@ -20,6 +20,7 @@ public class JsonManager {
     }
 
     public void updateJsonFile(ArrayList<Task> tasks){
+        //Clear contents
         try {
             Files.newBufferedWriter(path, StandardOpenOption.TRUNCATE_EXISTING).close();
         } catch (IOException ioe) {

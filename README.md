@@ -13,7 +13,7 @@ This is a simple command-line application which allows you to store and manage y
 1. Clone the repository
 
 ```
-% git clone <https://github.com/mquang279/Task-Tracker.git>
+% git clone https://github.com/mquang279/Task-Tracker.git
 % cd Task-Tracker
 ```
 
